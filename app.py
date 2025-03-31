@@ -12,6 +12,9 @@ migrate = Migrate(app, db)
 db.init_app(app)
 ma.init_app(app)
 
+@app.route('/')
+def home():
+    return "Welcome to the Superheroes API!"
 
 @app.route('/heroes', methods=['GET'])
 def get_heroes():
