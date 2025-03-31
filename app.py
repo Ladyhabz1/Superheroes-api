@@ -1,15 +1,15 @@
+# app.py
 from flask import Flask, jsonify, request
-from flask_sqlalchemy import SQLAlchemy
-from flask_marshmallow import Marshmallow
 from flask_migrate import Migrate
-from models import Hero, Power, HeroPower, db
+from extensions import db, ma
+from models import Hero, Power, HeroPower
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///superheroes.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
-db = SQLAlchemy(app)
-ma = Marshmallow(app)
+db.init_app(app)
+ma.init_app(app)
 migrate = Migrate(app, db)
 
 @app.route('/heroes', methods=['GET'])

@@ -1,4 +1,5 @@
-from app import db
+# models.py
+from extensions import db
 
 class Hero(db.Model):
     id = db.Column(db.Integer, primary_key=True)
