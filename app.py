@@ -62,3 +62,26 @@ def update_power(id):
     power.description = data["description"]
     db.session.commit()
     return jsonify({"id": power.id, "name": power.name, "description": power.description})
+@app.route('/hero_powers', methods=['POST'])
+def create_hero_power():
+    data = request.json
+
+    if data["strength"] not in ["Strong", "Weak", "Average"]:
+        return jsonify({"errors": ["Invalid strength value"]}), 400
+
+    hero_power = HeroPower(strength=data["strength"], hero_id=data["hero_id"], power_id=data["power_id"])
+    db.session.add(hero_power)
+    db.session.commit()
+
+    return jsonify({
+        "id": hero_power.id,
+        "hero_id": hero_power.hero_id,
+        "power_id": hero_power.power_id,
+        "strength": hero_power.strength,
+        "hero": {"id": hero_power.hero.id, "name": hero_power.hero.name, "super_name": hero_power.hero.super_name},
+        "power": {"id": hero_power.power.id, "name": hero_power.power.name, "description": hero_power.power.description}
+    }), 201
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
