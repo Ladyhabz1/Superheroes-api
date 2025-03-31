@@ -62,6 +62,7 @@ def update_power(id):
     power.description = data["description"]
     db.session.commit()
     return jsonify({"id": power.id, "name": power.name, "description": power.description})
+
 @app.route('/hero_powers', methods=['POST'])
 def create_hero_power():
     data = request.json
