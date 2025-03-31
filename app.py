@@ -11,3 +11,8 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
 migrate = Migrate(app, db)
+
+@app.route('/heroes', methods=['GET'])
+def get_heroes():
+    heroes = Hero.query.all()
+    return jsonify([{"id": h.id, "name": h.name, "super_name": h.super_name} for h in heroes])
